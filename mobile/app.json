@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "Hue TD",
+    "slug": "hue-td",
+    "scheme": "huetd",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "updates": { "fallbackToCacheTimeout": 0 },
+    "assetBundlePatterns": ["**/*"],
+    "android": {
+      "package": "com.example.huetd",
+      "permissions": ["android.permission.FOREGROUND_SERVICE"],
+      "usesCleartextTraffic": true
+    },
+    "plugins": [
+      ["expo-background-fetch"],
+      ["expo-task-manager"]
+    ]
+  }
+}
