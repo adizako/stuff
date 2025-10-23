@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, Pressable, StyleSheet, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ALL_TEAMS, helmetUriForTeam } from '@/lib/teams';
+import { ALL_TEAMS, helmetUriForTeam, teamName } from '@/lib/teams';
 
 export default function Teams() {
   const [selected, setSelected] = useState<string[]>([]);
@@ -33,7 +33,8 @@ export default function Teams() {
           return (
             <Pressable onPress={() => toggle(item)} style={[s.card, on && s.cardOn]}>
               <Image source={{ uri: helmetUriForTeam(item) }} style={s.logo} resizeMode="contain" />
-              <Text style={[s.cardText, on && s.cardTextOn]}>{item}</Text>
+              <Text style={[s.cardText, on && s.cardTextOn]}>{teamName(item)}</Text>
+              <Text style={[s.cardSub, on && s.cardTextOn]}>{item}</Text>
             </Pressable>
           );
         }}
@@ -50,4 +51,5 @@ const s = StyleSheet.create({
   cardText: { color: '#111', fontWeight: '600', marginTop: 6 },
   cardTextOn: { color: '#fff' },
   logo: { width: 42, height: 42 },
+  cardSub: { color: '#666', fontSize: 12 },
 });

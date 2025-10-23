@@ -40,3 +40,42 @@ export function helmetUriForTeam(abbr: string): string {
   // ESPN scoreboard logo (PNG). Stable, lightweight, transparent background.
   return `https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/${id}.png`;
 }
+
+export const TEAM_NAMES: Record<string, string> = {
+  DAL: 'Dallas Cowboys',
+  NYG: 'New York Giants',
+  PHI: 'Philadelphia Eagles',
+  WAS: 'Washington Commanders',
+  GB: 'Green Bay Packers',
+  CHI: 'Chicago Bears',
+  MIN: 'Minnesota Vikings',
+  DET: 'Detroit Lions',
+  TB: 'Tampa Bay Buccaneers',
+  NO: 'New Orleans Saints',
+  ATL: 'Atlanta Falcons',
+  CAR: 'Carolina Panthers',
+  SEA: 'Seattle Seahawks',
+  SF: 'San Francisco 49ers',
+  LAR: 'Los Angeles Rams',
+  ARI: 'Arizona Cardinals',
+  NE: 'New England Patriots',
+  BUF: 'Buffalo Bills',
+  MIA: 'Miami Dolphins',
+  NYJ: 'New York Jets',
+  BAL: 'Baltimore Ravens',
+  PIT: 'Pittsburgh Steelers',
+  CLE: 'Cleveland Browns',
+  CIN: 'Cincinnati Bengals',
+  TEN: 'Tennessee Titans',
+  JAX: 'Jacksonville Jaguars',
+  IND: 'Indianapolis Colts',
+  HOU: 'Houston Texans',
+  KC: 'Kansas City Chiefs',
+  LAC: 'Los Angeles Chargers',
+  DEN: 'Denver Broncos',
+  LV: 'Las Vegas Raiders',
+};
+
+export function teamName(abbr: string): string {
+  return TEAM_NAMES[abbr] ?? abbr;
+}
