@@ -34,3 +34,9 @@ export const TEAM_COLORS: Record<string, RGB[]> = {
   LV: [[0,0,0], [165,172,175]],
 };
 export const ALL_TEAMS = Object.keys(TEAM_COLORS);
+
+export function helmetUriForTeam(abbr: string): string {
+  const id = abbr.toLowerCase();
+  // ESPN scoreboard logo (PNG). Stable, lightweight, transparent background.
+  return `https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/${id}.png`;
+}

@@ -45,7 +45,7 @@ export default function Lights() {
 const s = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: '#f9f9fb' },
   title: { fontSize: 28, fontWeight: '600', marginBottom: 16 },
-  card: { backgroundColor: '#fff', padding: 16, borderRadius: 12, borderWidth: 1, borderColor: '#e3e3e8' },
+  card: { backgroundColor: '#fff', padding: 16, borderRadius: 12, borderWidth: 1, borderColor: '#e3e3e8', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   cardOn: { backgroundColor: '#111' },
   cardText: { color: '#111', fontWeight: '600' },
 });
