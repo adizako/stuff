@@ -23,9 +23,11 @@ export default function Monitor() {
         const cfg = JSON.parse(cfgRaw) as { bridgeIp: string; username?: string; onlyTD?: boolean; pollSeconds?: number };
         const selected: string[] = teamsRaw ? JSON.parse(teamsRaw) : [];
         const lightIds: number[] = lightIdsRaw ? JSON.parse(lightIdsRaw) : [];
-        const poll = cfg.pollSeconds ?? 5;
         const games = await fetchLiveGames();
         const live = games.filter(g => ['in', 'post', 'delay'].includes(g.status));
+        const activelyPlaying = games
+          .filter(g => ['in', 'delay'].includes(g.status))
+          .some(g => selected.includes(g.home.abbreviation) || selected.includes(g.away.abbreviation));
         for (const g of live) {
           if (!(g.id in prevRef.current)) prevRef.current[g.id] = [g.home.score, g.away.score];
         }
@@ -41,7 +43,9 @@ export default function Monitor() {
           }
         }
         for (const g of live) prevRef.current[g.id] = [g.home.score, g.away.score];
-        timer = setTimeout(tick, poll * 1000);
+        // Dynamic polling: ~10s when selected team is playing; otherwise back off to ~60s
+        const nextMs = activelyPlaying ? 10_000 : 60_000;
+        timer = setTimeout(tick, nextMs);
       } catch (e: any) {
         append(`Error: ${e?.message ?? String(e)}`);
         timer = setTimeout(tick, 5000);

@@ -87,12 +87,18 @@ def monitor():
     hue.connect()
 
     prev_scores = {}
-    print(f"Monitoring teams: {', '.join(cfg.selected_teams)} (poll {cfg.poll_seconds}s, touchdowns-only={cfg.only_touchdowns})")
+    print(f"Monitoring teams: {', '.join(cfg.selected_teams)} (touchdowns-only={cfg.only_touchdowns})")
     while True:
         try:
             games = fetch_live_games()
             # Filter live or recently updated games only
             live_games = [g for g in games if g.status in ("in", "post", "delay")]
+            actively_playing = any(
+                g.status in ("in", "delay") and (
+                    g.home.abbreviation.upper() in cfg.selected_teams or g.away.abbreviation.upper() in cfg.selected_teams
+                )
+                for g in games
+            )
             # Build prev map entries
             for g in live_games:
                 if g.id not in prev_scores:
@@ -109,13 +115,14 @@ def monitor():
             # Update prev
             for g in live_games:
                 prev_scores[g.id] = (g.home.score, g.away.score)
-            time.sleep(cfg.poll_seconds)
+            # Dynamic polling: ~10s when selected team is playing; back off to ~60s otherwise
+            time.sleep(10 if actively_playing else 60)
         except KeyboardInterrupt:
             print("Exiting.")
             raise typer.Exit(0)
         except Exception as e:
             print(f"[red]Error: {e}[/red]")
-            time.sleep(cfg.poll_seconds)
+            time.sleep(10)
 
 
 @app.command()
