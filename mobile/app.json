@@ -15,8 +15,12 @@
     "assetBundlePatterns": ["**/*"],
     "android": {
       "package": "com.example.huetd",
-      "permissions": [],
+      "permissions": ["android.permission.FOREGROUND_SERVICE"],
       "usesCleartextTraffic": true
-    }
+    },
+    "plugins": [
+      ["expo-background-fetch"],
+      ["expo-task-manager"]
+    ]
   }
 }
